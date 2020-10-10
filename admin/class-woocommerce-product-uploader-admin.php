@@ -77,6 +77,7 @@ class WoocommerceProductUploaderAdmin
 
         wp_enqueue_style($this->WoocommerceProductUploader, WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/css/bootstrap.min.css', array(), $this->version, 'all');//$this->version
         wp_enqueue_style('wpu_admin', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/css/style.css', array(), $this->version, 'all');
+        wp_enqueue_style('wpu_admin', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/css/jquery-ui.css', array(), $this->version, 'all');
     }
 
     /**
@@ -100,7 +101,9 @@ class WoocommerceProductUploaderAdmin
         wp_enqueue_script( $this->WoocommerceProductUploader.'-lib', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/libs.js', array('jquery'), $this->version, false );
         wp_enqueue_script('wpu-bootstrap', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/bootstrap.min.js', array('jquery'), $this->version, false );
         wp_enqueue_script($this->WoocommerceProductUploader.'-upload', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery.fileupload.min.js', array('jquery'), $this->version, false );
-		wp_enqueue_script( $this->WoocommerceProductUploader.'-jscript', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jscript.js', array('jquery'), $this->version, false );
+        wp_enqueue_script( $this->WoocommerceProductUploader.'-jquery-1.12.4', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery-1.12.4.js', array('jquery'), $this->version, false );
+        wp_enqueue_script( $this->WoocommerceProductUploader.'-jquery-ui', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery-ui.js', array('jquery'), $this->version, false );
+        wp_enqueue_script( $this->WoocommerceProductUploader.'-jscript', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jscript.js', array('jquery'), $this->version, false );
 
 
         $langs = array(

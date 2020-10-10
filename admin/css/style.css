@@ -12,9 +12,7 @@
 .wpu-none-added {
   background-color: rgba(266, 106, 106, 0.33) !important;
 }
-.wpu-just-added{
-  background-color: rgba(41, 241, 195, 0.33) !important;
-}
+
 .wpu-delete-custom-field-btn{
   background-color: #dc3545;
   float: right;
