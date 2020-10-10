@@ -97,8 +97,10 @@ class WoocommerceProductUploaderAdmin
          * between the defined hooks and the functions defined in this
          * class.
          */
+        wp_enqueue_script( $this->WoocommerceProductUploader.'-lib', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/libs.js', array('jquery'), $this->version, false );
         wp_enqueue_script('wpu-bootstrap', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/bootstrap.min.js', array('jquery'), $this->version, false );
         wp_enqueue_script($this->WoocommerceProductUploader.'-upload', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery.fileupload.min.js', array('jquery'), $this->version, false );
+		wp_enqueue_script( $this->WoocommerceProductUploader.'-jscript', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jscript.js', array('jquery'), $this->version, false );
 
 
         $langs = array(
@@ -108,6 +110,7 @@ class WoocommerceProductUploaderAdmin
 
 
         // Plugin Validation
+        wp_localize_script( $this->WoocommerceProductUploader.'-jscript', 'WPU_REMOTE', array('LANG' => $langs, 'URL' => WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH, '1.1', true));
     }
     
 
