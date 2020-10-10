@@ -40,6 +40,23 @@
                             </div>
                           </div>
 
+                          <legend>Add Required Custom Tab Descriptions</legend>
+                          <div class="form-group">
+                            <label class="col-md-4 control-label" for="wpu-add-custom-tab-requirement">Add Custom Tab Description</label>  
+                            <div class="col-md-5">
+                            <input id="wpu-add-custom-tab-requirement" name="wpu-add-custom-tab-requirement" type="text" placeholder="" class="form-control input-md" required="">
+                            </div>
+                          </div>
+                          <legend>Your Custom Added tabs</legend>
+                          <ul id="your-custom-added-tabs" class="list-group list-group-flush">
+                          <?php
+                              /* dummy data that gets populated here todo bring CONFIGS data form database here to populate list */
+                              $dummyCustomTabs = ["Cras justo odio", "Dapibus ac facilisis in", "Morbi leo risus", "Porta ac consectetur ac", "Vestibulum at eros"];
+                            foreach ($dummyCustomTabs as $key => $value) {
+                                echo '<li class="list-group-item">' . $value . '<label class="wpu-delete-custom-field-btn"><a><img src="' . WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . '/public/img/close__.png"></a></label></li>';
+                            }
+                            ?>
+                          </ul>
                           </fieldset>
                         </form>
                       </div>
@@ -68,9 +85,88 @@
                             </div>
                           </div>
 
-                          </fieldset>
+                          <legend>Product Descriptions</legend>
+
+                          <div class="form-group row">
+                          <label class="col-4">Is Product Description Required?</label> 
+                          <div class="col-8">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                              <input name="product-description-required" id="product-description-required_0" type="checkbox" class="custom-control-input" value="true"> 
+                              <label for="product-description-required_0" class="custom-control-label">Yes</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-4">Is Short Product Description Required?</label> 
+                          <div class="col-8">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                              <input name="product-short-description-required" id="product-short-description-required_0" type="checkbox" class="custom-control-input" value="true"> 
+                              <label for="product-short-description-required_0" class="custom-control-label">Yes</label>
+                            </div>
+                          </div>
+                        </div> 
+                        <div class="form-group row">
+                          <label class="col-4">Is Product Price Required?</label> 
+                          <div class="col-8">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                              <input name="product-product-price-required" id="product-product-price-required_0" type="checkbox" class="custom-control-input" value="true"> 
+                              <label for="product-product-price-required_0" class="custom-control-label">Yes</label>
+                            </div>
+                          </div>
+                        </div> 
+
+                        </fieldset>
                         </form>
+                        <legend>Product Attributes</legend>
+                        <form>
+                        <div class="form-group row">
+                          <label class="col-4 col-form-label">Check each of the required attributes for products so that the folder error checker can reject incomplete product pack folders.</label> 
+                          <div class="col-8">
+                            <div class="custom-controls-stacked">
+                              <div class="custom-control custom-checkbox">
+                                <input name="required-attributes-for-each-product" id="required-attributes-for-each-product_0" type="checkbox" class="custom-control-input" value="product-name-required"> 
+                                <label for="required-attributes-for-each-product_0" class="custom-control-label">Name</label>
+                              </div>
+                            </div>
+                            <div class="custom-controls-stacked">
+                              <div class="custom-control custom-checkbox">
+                                <input name="required-attributes-for-each-product" id="required-attributes-for-each-product_1" type="checkbox" class="custom-control-input" value="product-sku-required"> 
+                                <label for="required-attributes-for-each-product_1" class="custom-control-label">SKU</label>
+                              </div>
+                            </div>
+                            <div class="custom-controls-stacked">
+                              <div class="custom-control custom-checkbox">
+                                <input name="required-attributes-for-each-product" id="required-attributes-for-each-product_2" type="checkbox" class="custom-control-input" value="product-stock-required"> 
+                                <label for="required-attributes-for-each-product_2" class="custom-control-label">Stock Status</label>
+                              </div>
+                            </div>
+                            <div class="custom-controls-stacked">
+                              <div class="custom-control custom-checkbox">
+                                <input name="required-attributes-for-each-product" id="required-attributes-for-each-product_3" type="checkbox" class="custom-control-input" value="product-price-required"> 
+                                <label for="required-attributes-for-each-product_3" class="custom-control-label">Price</label>
+                              </div>
+                            </div>
+                            <div class="custom-controls-stacked">
+                              <div class="custom-control custom-checkbox">
+                                <input name="required-attributes-for-each-product" id="required-attributes-for-each-product_4" type="checkbox" class="custom-control-input" value="product-categories-required"> 
+                                <label for="required-attributes-for-each-product_4" class="custom-control-label">Categories</label>
+                              </div>
+                            </div>
+                            <div class="custom-controls-stacked">
+                              <div class="custom-control custom-checkbox">
+                                <input name="required-attributes-for-each-product" id="required-attributes-for-each-product_5" type="checkbox" class="custom-control-input" value="product-tags-required"> 
+                                <label for="required-attributes-for-each-product_5" class="custom-control-label">Tags</label>
+                              </div>
+                            </div>
+                          </div>
+                      </div> 
+                      <div class="form-group row">
+                        <div class="offset-4 col-8">
+                          <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
                       </div>
+                    </form>
+                </div>
               </div>
               <div class="row"></div>
             </div>
@@ -87,3 +183,55 @@
 
 
 <!-- SCRIPTS -->
+<script>
+jQuery(document).ready(function($){
+    const $yourCustomAddedTabsList = $('#your-custom-added-tabs');
+    const $wpuDeleteCustomFieldBtns = $('.wpu-delete-custom-field-btn');
+    const n = $wpuDeleteCustomFieldBtns.size();
+    var currentCustomFieldCount = n;
+
+    const deleteCustomField = function(){
+      const $a  = $(this);
+      const $li = $a.parent();
+      $a.unbind('click');
+      $li.fadeOut('slow');
+      currentCustomFieldCount--;
+      if (currentCustomFieldCount == 0){
+        $yourCustomAddedTabsList.hide();
+        $yourCustomAddedTabsList.append('<li class="list-group-item none-added">None added!  Use the input field above to add custom tabs..</li>');
+        $yourCustomAddedTabsList.fadeIn(2999);
+      }
+    }
+
+    $wpuDeleteCustomFieldBtns.on('click', deleteCustomField);
+
+    const $wpuAddCustomTabRequirement = $('#wpu-add-custom-tab-requirement');
+    $wpuAddCustomTabRequirement.keypress(function(event) {
+        if (event.keyCode == 13) {
+          var li = document.createElement("li");
+          li.className = "list-group-item";
+          var txtNode = document.createTextNode($(this).val());
+          $(li).append(txtNode);
+          var label = document.createElement('label');
+          label.className="wpu-delete-custom-field-btn";
+          var a = document.createElement('a');
+          $(label).bind('click', deleteCustomField);
+          $(a).append('<img src="http://localhost/wpu/wp-content/plugins/woocommerce-product-uploader/public/img/close__.png"></a>');
+          $(label).append(a);
+          $(li).append(label);
+          $(li).hide();
+          $yourCustomAddedTabsList.append(li);
+          $(li).fadeIn(1999);
+          if (currentCustomFieldCount == 0){
+            $yourCustomAddedTabsList.find('li.list-group-item.none-added').remove();
+          }
+          currentCustomFieldCount++;
+          // $yourCustomAddedTabsList.append('<li class="list-group-item">' + $(this).val() + '<label class="wpu-delete-custom-field-btn"><a><img src="http://localhost/wpu/wp-content/plugins/woocommerce-product-uploader/public/img/close__.png"></a></label></li>')
+                                  // .hide()
+                                  // .fadeIn(1999)
+                                  // .bind('click', deleteCustomField);
+        }
+    })
+});
+</script>
+
