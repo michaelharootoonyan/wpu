@@ -15,7 +15,7 @@ jQuery(document).ready(function($)
       n--;
       if (n == 0){
         $yourCustomAddedTabsList.hide();
-        $yourCustomAddedTabsList.append('<li class="list-group-item none-added">None added!  Use the input field above to add custom tabs..</li>');
+        $yourCustomAddedTabsList.append('<li class="list-group-item wpu-none-added">None added!  Use the input field above to add custom tabs..</li>');
         $yourCustomAddedTabsList.fadeIn(2999);
       }
     }
@@ -43,7 +43,7 @@ jQuery(document).ready(function($)
         // animation of the appending
         if (n == 0){
           // remove the "add custom tabs to populate here" notice
-          $yourCustomAddedTabsList.find('li.list-group-item.none-added').fadeOut(999).remove();
+          $yourCustomAddedTabsList.find('li.list-group-item.wpu-none-added').fadeOut(999).remove();
         }
         n++;
         $(li).hide();

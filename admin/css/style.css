@@ -9,6 +9,12 @@
 .wpu-p-cont:not(.smodal) > div:first-child {    padding: 1px 20px;    background: #fff;    margin: 20px 20px !important;}
 .wpu-p-cont.wpu-new-bg .wpu-inner-cont { margin-top: 25px;width: 100%;background: #fff}
 */
+.wpu-none-added {
+  background-color: rgba(266, 106, 106, 0.33);
+}
+.wpu-just-added{
+  background-color: rgba(41, 241, 195, 0.33);
+}
 .wpu-delete-custom-field-btn{
   background-color: #dc3545;
   float: right;
