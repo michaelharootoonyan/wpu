@@ -19,24 +19,22 @@
                         <form class="form-horizontal">
                           <fieldset>
 
-                          <!-- Form Name -->
+                          <!-- 
+                            =================================================================
+                                                Featured Image Dimensions
+                            =================================================================
+                           -->
                           <legend>Featured Image Dimensions</legend>
-
-                          <!-- Text input-->
                           <div class="form-group">
                             <label class="col-md-4 control-label" for="wpu-featured-image-width">Width (px)</label>  
                             <div class="col-md-5">
-                            <input id="wpu-featured-image-width" name="wpu-featured-image-width" type="text" placeholder="enter digits only" class="form-control input-md" required="">
-                              
+                              <input id="wpu-featured-image-width" name="wpu-featured-image-width" type="text" placeholder="enter digits only" class="form-control input-md wpu-integer-data-type" required="" maxlength="4">
                             </div>
                           </div>
-
-                          <!-- Text input-->
                           <div class="form-group">
                             <label class="col-md-4 control-label" for="wpu-featured-image-height">Height (px)</label>  
                             <div class="col-md-5">
-                            <input id="wpu-featured-image-height" name="wpu-featured-image-height" type="text" placeholder="enter digits only" class="form-control input-md" required="">
-                              
+                              <input id="wpu-featured-image-height" name="wpu-featured-image-height" type="text" placeholder="enter digits only" class="form-control input-md wpu-integer-data-type" required="" maxlength="4">
                             </div>
                           </div>
 
@@ -48,7 +46,7 @@
                             </div>
                           </div>
                           <legend>Your Custom Added tabs</legend>
-                          <ul id="your-custom-added-tabs" class="list-group list-group-flush">
+                          <ul id="wpu-your-custom-added-tabs" class="list-group list-group-flush">
                           <?php
                               /* dummy data that gets populated here todo bring CONFIGS data form database here to populate list */
                               $dummyCustomTabs = ["Cras justo odio", "Dapibus ac facilisis in", "Morbi leo risus", "Porta ac consectetur ac", "Vestibulum at eros"];
@@ -63,36 +61,37 @@
                       <div class="col-md-6">
                         <form class="form-horizontal">
                           <fieldset>
-
-                          <!-- Form Name -->
+                          <!-- 
+                            =================================================================
+                                                Gallery Image Dimensions
+                            =================================================================
+                           -->
                           <legend>Gallery Image Dimensions</legend>
-
-                          <!-- Text input-->
                           <div class="form-group">
                             <label class="col-md-4 control-label" for="wpu-gallery-image-width">Width (px)</label>  
                             <div class="col-md-5">
-                            <input id="wpu-gallery-image-width" name="wpu-gallery-image-width" type="text" placeholder="enter digits only" class="form-control input-md" required="">
-                              
+                              <input id="wpu-gallery-image-width" name="wpu-gallery-image-width" type="text" placeholder="enter digits only" class="form-control input-md wpu-integer-data-type" required="" maxlength="4">
                             </div>
                           </div>
-
-                          <!-- Text input-->
                           <div class="form-group">
                             <label class="col-md-4 control-label" for="wpu-gallery-image-height">Height (px)</label>  
                             <div class="col-md-5">
-                            <input id="wpu-gallery-image-height" name="wpu-gallery-image-height" type="text" placeholder="enter digits only" class="form-control input-md" required="">
-                              
+                              <input id="wpu-gallery-image-height" name="wpu-gallery-image-height" type="text" placeholder="enter digits only" class="form-control input-md wpu-integer-data-type" required="" maxlength="4">
                             </div>
                           </div>
-
+                          <!-- 
+                            =================================================================
+                                                 Product Descriptions
+                            =================================================================
+                           -->
                           <legend>Product Descriptions</legend>
 
                           <div class="form-group row">
                           <label class="col-4">Is Product Description Required?</label> 
                           <div class="col-8">
                             <div class="custom-control custom-checkbox custom-control-inline">
-                              <input name="product-description-required" id="product-description-required_0" type="checkbox" class="custom-control-input" value="true"> 
-                              <label for="product-description-required_0" class="custom-control-label">Yes</label>
+                              <input name="wpu-product-description-required" id="wpu-product-description-required" type="checkbox" class="custom-control-input" value="true"> 
+                              <label for="wpu-product-description-required" class="custom-control-label">Yes</label>
                             </div>
                           </div>
                         </div>
@@ -100,8 +99,8 @@
                           <label class="col-4">Is Short Product Description Required?</label> 
                           <div class="col-8">
                             <div class="custom-control custom-checkbox custom-control-inline">
-                              <input name="product-short-description-required" id="product-short-description-required_0" type="checkbox" class="custom-control-input" value="true"> 
-                              <label for="product-short-description-required_0" class="custom-control-label">Yes</label>
+                              <input name="wpu-product-short-description-required" id="wpu-product-short-description-required" type="checkbox" class="custom-control-input" value="true"> 
+                              <label for="wpu-product-short-description-required" class="custom-control-label">Yes</label>
                             </div>
                           </div>
                         </div> 
@@ -109,14 +108,19 @@
                           <label class="col-4">Is Product Price Required?</label> 
                           <div class="col-8">
                             <div class="custom-control custom-checkbox custom-control-inline">
-                              <input name="product-product-price-required" id="product-product-price-required_0" type="checkbox" class="custom-control-input" value="true"> 
-                              <label for="product-product-price-required_0" class="custom-control-label">Yes</label>
+                              <input name="wpu-product-product-price-required" id="wpu-product-product-price-required" type="checkbox" class="custom-control-input" value="true"> 
+                              <label for="wpu-product-product-price-required" class="custom-control-label">Yes</label>
                             </div>
                           </div>
                         </div> 
 
                         </fieldset>
                         </form>
+                          <!-- 
+                            =================================================================
+                                                 Product Attributes
+                            =================================================================
+                           -->
                         <legend>Product Attributes</legend>
                         <form>
                         <div class="form-group row">
@@ -124,45 +128,45 @@
                           <div class="col-8">
                             <div class="custom-controls-stacked">
                               <div class="custom-control custom-checkbox">
-                                <input name="required-attributes-for-each-product" id="required-attributes-for-each-product_0" type="checkbox" class="custom-control-input" value="product-name-required"> 
-                                <label for="required-attributes-for-each-product_0" class="custom-control-label">Name</label>
+                                <input name="wpu-required-attributes-for-each-product-name" id="wpu-required-attributes-for-each-product-name" type="checkbox" class="custom-control-input" value="product-name-required"> 
+                                <label for="wpu-required-attributes-for-each-product-name" class="custom-control-label">Name</label>
                               </div>
                             </div>
                             <div class="custom-controls-stacked">
                               <div class="custom-control custom-checkbox">
-                                <input name="required-attributes-for-each-product" id="required-attributes-for-each-product_1" type="checkbox" class="custom-control-input" value="product-sku-required"> 
-                                <label for="required-attributes-for-each-product_1" class="custom-control-label">SKU</label>
+                                <input name="wpu-required-attributes-for-each-product-sku" id="wpu-required-attributes-for-each-product-sku" type="checkbox" class="custom-control-input" value="product-sku-required"> 
+                                <label for="wpu-required-attributes-for-each-product-sku" class="custom-control-label">SKU</label>
                               </div>
                             </div>
                             <div class="custom-controls-stacked">
                               <div class="custom-control custom-checkbox">
-                                <input name="required-attributes-for-each-product" id="required-attributes-for-each-product_2" type="checkbox" class="custom-control-input" value="product-stock-required"> 
-                                <label for="required-attributes-for-each-product_2" class="custom-control-label">Stock Status</label>
+                                <input name="wpu-required-attributes-for-each-product-stock-status" id="wpu-required-attributes-for-each-product-stock-status" type="checkbox" class="custom-control-input" value="product-stock-required"> 
+                                <label for="wpu-required-attributes-for-each-product-stock-status" class="custom-control-label">Stock Status</label>
                               </div>
                             </div>
                             <div class="custom-controls-stacked">
                               <div class="custom-control custom-checkbox">
-                                <input name="required-attributes-for-each-product" id="required-attributes-for-each-product_3" type="checkbox" class="custom-control-input" value="product-price-required"> 
-                                <label for="required-attributes-for-each-product_3" class="custom-control-label">Price</label>
+                                <input name="wpu-required-attributes-for-each-product-price" id="wpu-required-attributes-for-each-product-price" type="checkbox" class="custom-control-input" value="product-price-required"> 
+                                <label for="wpu-required-attributes-for-each-product-price" class="custom-control-label">Price</label>
                               </div>
                             </div>
                             <div class="custom-controls-stacked">
                               <div class="custom-control custom-checkbox">
-                                <input name="required-attributes-for-each-product" id="required-attributes-for-each-product_4" type="checkbox" class="custom-control-input" value="product-categories-required"> 
-                                <label for="required-attributes-for-each-product_4" class="custom-control-label">Categories</label>
+                                <input name="wpu-required-attributes-for-each-product-categories" id="wpu-required-attributes-for-each-product-categories" type="checkbox" class="custom-control-input" value="product-categories-required"> 
+                                <label for="wpu-required-attributes-for-each-product-categories" class="custom-control-label">Categories</label>
                               </div>
                             </div>
                             <div class="custom-controls-stacked">
                               <div class="custom-control custom-checkbox">
-                                <input name="required-attributes-for-each-product" id="required-attributes-for-each-product_5" type="checkbox" class="custom-control-input" value="product-tags-required"> 
-                                <label for="required-attributes-for-each-product_5" class="custom-control-label">Tags</label>
+                                <input name="wpu-required-attributes-for-each-product-tags" id="wpu-required-attributes-for-each-product" type="checkbox" class="custom-control-input" value="product-tags-required"> 
+                                <label for="wpu-required-attributes-for-each-product-tags" class="custom-control-label">Tags</label>
                               </div>
                             </div>
                           </div>
                       </div> 
                       <div class="form-group row">
                         <div class="offset-4 col-8">
-                          <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                          <button id="wpu-submit-product-requirements-btn" name="submit" type="submit" class="btn btn-primary">Submit</button>
                         </div>
                       </div>
                     </form>
