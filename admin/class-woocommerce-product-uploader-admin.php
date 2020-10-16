@@ -113,7 +113,7 @@ class WoocommerceProductUploaderAdmin
 
 
         // Plugin Validation
-        wp_localize_script( $this->WoocommerceProductUploader.'-jscript', 'WPU_REMOTE', array('LANG' => $langs, 'URL' => WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH, '1.1', true));
+        wp_localize_script( $this->WoocommerceProductUploader.'-jscript', 'WPU_REMOTE', array('LANG' => $langs, 'URL' => WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH, 'ADMIN_URL' => admin_url( 'admin-ajax.php' ), '1.1', true));
     }
     
 
@@ -127,5 +127,42 @@ class WoocommerceProductUploaderAdmin
 
         global $wpdb;
         include WOOCOMMERCE_PRODUCT_UPLOADER_PLUGIN_PATH.'admin/partials/dashboard.php';
+    }
+
+    
+	/**
+	 * [add_new_requirements POST METHODS for adding new product requirements]
+	 */
+    public function wpu_add_new_requirements()
+    {
+
+		global $wpdb;
+
+		$response  = new \stdclass();
+		$response->success = false;
+
+		// $form_data = stripslashes_deep($_REQUEST['data']);
+        // $path = ABSPATH . "wp-content\plugins\woocommerce-product-uploader\debug.log";
+        // $myfile = fopen($path, "a") or die("Unable to open file!");  // append mode rather than write mode 'w'
+        // fwrite($myfile, $form_data);
+        // fclose($myfile);
+		
+		//insert into stores table
+        if ($wpdb->insert(
+            WOOCOMMERCE_PRODUCT_UPLOADER_PREFIX . 'pluginmeta',
+            array('meta_key' => $_REQUEST['meta_key'],'meta_value' => $_REQUEST['meta_value']),
+            array('%s','%s')
+        )) {
+            $response->success = true;
+            $response->msg = __('Product requirements added successfully!','wpu_admin');
+        } else {
+            $wpdb->show_errors = true;
+
+            $response->error = __('Error occurred while saving product requirements', 'wpu_admin');
+            $response->msg   = $wpdb->print_error();
+        }
+        
+        echo json_encode($response);
+        die;
     }
 }

@@ -36,24 +36,18 @@ class WoocommerceProductUploaderActivator
 
     public static function addTables()
     {
-        $path = ABSPATH . "wp-content\debug.log";
-        $myfile = fopen($path, "a") or die("Unable to open file!");  // append mode rather than write mode 'w'
+        global $wpdb;
+		$charset_collate = 'utf8';
+		$prefix 	 	 = $wpdb->prefix."wpu_";
 
-        $txt = "\n\nThe following Function Fired: \n";
-        fwrite($myfile, $txt);
+		
 
-        $txt = "addTables\n\n";
-        fwrite($myfile, $txt);
-
-        $txt = "passing the following parameters:\n";
-        fwrite($myfile, $txt);
-
-        $txt = "Plugin Directory Url        = " . WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . "\n"
-        . "Plugin Directory Path       = " . WOOCOMMERCE_PRODUCT_UPLOADER_PLUGIN_PATH . "\n"
-        . "Plugin Prefix in DB         = " . WOOCOMMERCE_PRODUCT_UPLOADER_PREFIX . "\n"
-        . "Plugin Base Directory Path  = " . WOOCOMMERCE_PRODUCT_UPLOADER_PLUGIN_BASE . "\n"
-        . "Plugin Current Version      = " . WOOCOMMERCE_PRODUCT_UPLOADER_CVERSION . "\n";
-        fwrite($myfile, $txt);
-        fclose($myfile);
+		/*Plugin Meta*/
+		$createPluginMetaTableQuery = "CREATE TABLE IF NOT EXISTS `wp_wpu_pluginmeta` (
+                                      `meta_key` longtext NOT NULL,
+                                      `meta_value` longtext NOT NULL
+                                      ) DEFAULT CHARSET=utf8;";
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+		dbDelta($createPluginMetaTableQuery);
     }
 }

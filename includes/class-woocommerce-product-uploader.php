@@ -124,6 +124,9 @@ class WoocommerceProductUploader
 
         $this->loader->add_action('admin_enqueue_scripts', $this->plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $this->plugin_admin, 'enqueue_scripts');
+
+        add_action('wp_ajax_wpu_add_new_requirements', array($this->plugin_admin, 'wpu_add_new_requirements'));	
+
     }
     
     /*All Admin Callback hooks*/

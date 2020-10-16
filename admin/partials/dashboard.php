@@ -79,50 +79,13 @@
                               <input id="wpu-gallery-image-height" name="wpu-gallery-image-height" type="text" placeholder="enter digits only" class="form-control input-md wpu-integer-data-type" required="" maxlength="4">
                             </div>
                           </div>
-                          <!-- 
-                            =================================================================
-                                                 Product Descriptions
-                            =================================================================
-                           -->
-                          <legend>Product Descriptions</legend>
-
-                          <div class="form-group row">
-                          <label class="col-4">Is Product Description Required?</label> 
-                          <div class="col-8">
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                              <input name="wpu-product-description-required" id="wpu-product-description-required" type="checkbox" class="custom-control-input" value="true"> 
-                              <label for="wpu-product-description-required" class="custom-control-label">Yes</label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <label class="col-4">Is Short Product Description Required?</label> 
-                          <div class="col-8">
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                              <input name="wpu-product-short-description-required" id="wpu-product-short-description-required" type="checkbox" class="custom-control-input" value="true"> 
-                              <label for="wpu-product-short-description-required" class="custom-control-label">Yes</label>
-                            </div>
-                          </div>
-                        </div> 
-                        <div class="form-group row">
-                          <label class="col-4">Is Product Price Required?</label> 
-                          <div class="col-8">
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                              <input name="wpu-product-product-price-required" id="wpu-product-product-price-required" type="checkbox" class="custom-control-input" value="true"> 
-                              <label for="wpu-product-product-price-required" class="custom-control-label">Yes</label>
-                            </div>
-                          </div>
-                        </div> 
-
-                        </fieldset>
-                        </form>
+                         
                           <!-- 
                             =================================================================
                                                  Product Attributes
                             =================================================================
                            -->
                         <legend>Product Attributes</legend>
-                        <form>
                         <div class="form-group row">
                           <label class="col-4 col-form-label">Check each of the required attributes for products so that the folder error checker can reject incomplete product pack folders.</label> 
                           <div class="col-8">
@@ -130,6 +93,18 @@
                               <div class="custom-control custom-checkbox">
                                 <input name="wpu-required-attributes-for-each-product-name" id="wpu-required-attributes-for-each-product-name" type="checkbox" class="custom-control-input" value="product-name-required"> 
                                 <label for="wpu-required-attributes-for-each-product-name" class="custom-control-label">Name</label>
+                              </div>
+                            </div>
+                            <div class="custom-controls-stacked">
+                              <div class="custom-control custom-checkbox">
+                                <input name="wpu-required-attributes-for-each-product-description" id="wpu-required-attributes-for-each-product-description" type="checkbox" class="custom-control-input" value="product-name-required"> 
+                                <label for="wpu-required-attributes-for-each-product-description" class="custom-control-label">Description</label>
+                              </div>
+                            </div>
+                            <div class="custom-controls-stacked">
+                              <div class="custom-control custom-checkbox">
+                                <input name="wpu-required-attributes-for-each-product-short-description" id="wpu-required-attributes-for-each-product-short-description" type="checkbox" class="custom-control-input" value="product-name-required"> 
+                                <label for="wpu-required-attributes-for-each-product-short-description" class="custom-control-label">Short Description</label>
                               </div>
                             </div>
                             <div class="custom-controls-stacked">

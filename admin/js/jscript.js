@@ -1,11 +1,13 @@
 jQuery(document).ready(function($)
 {
-    let requirementsCheckList = [];  // boolean key value list
+    let requirementsCheckList = {}  // boolean key value list
     const $wpuCustomAddedTabsList = $('#wpu-your-custom-added-tabs'),
           $wpuAddCustomTabRequirement = $('#wpu-add-custom-tab-requirement'),
           $wpuIntegerDataTypeFields = $(".wpu-integer-data-type"),
           $wpuSubmitProductRequirements = $('#wpu-submit-product-requirements-btn'),
           $wpuRequiresName = $('#wpu-required-attributes-for-each-product-name'),
+          $wpuRequiresDescription = $('#wpu-required-attributes-for-each-product-description'),
+          $wpuRequiresShortDescription = $('#wpu-required-attributes-for-each-product-short-description'),
           $wpuRequiresSku = $('#wpu-required-attributes-for-each-product-sku'),
           $wpuRequiresStockStatus = $('#wpu-required-attributes-for-each-product-stock-status'),
           $wpuRequiresPrice = $('#wpu-required-attributes-for-each-product-price'),
@@ -18,13 +20,20 @@ jQuery(document).ready(function($)
     const markRequirementsCheckList = function(e){
       e.preventDefault();
       e.stopPropagation();
-      function markRequirementsChecklistHelper($cb, key){requirementsCheckList[key] = $cb.is(':checked') ? true : false;}
-      markRequirementsChecklistHelper($wpuRequiresName, 'name');
-      markRequirementsChecklistHelper($wpuRequiresPrice, 'price');
-      markRequirementsChecklistHelper($wpuRequiresSku, 'sku');
-      markRequirementsChecklistHelper($wpuRequiresStockStatus, 'stock-status');
-      markRequirementsChecklistHelper($wpuRequiresTags, 'tags');
-      markRequirementsChecklistHelper($wpuRequiresCategories, 'categories');
+      function markCheckBox($cb, key){requirementsCheckList[key] = $cb.is(':checked') ? true : false;}
+      function markInput(inp, key){requirementsCheckList[key] = $(inp).val();}
+      markCheckBox($wpuRequiresName, 'name');
+      markCheckBox($wpuRequiresDescription, 'description');
+      markCheckBox($wpuRequiresShortDescription, 'short-description');
+      markCheckBox($wpuRequiresPrice, 'price');
+      markCheckBox($wpuRequiresSku, 'sku');
+      markCheckBox($wpuRequiresStockStatus, 'stock-status');
+      markCheckBox($wpuRequiresTags, 'tags');
+      markCheckBox($wpuRequiresCategories, 'categories');
+      markInput($wpuIntegerDataTypeFields[0],'featured-image-width');
+      markInput($wpuIntegerDataTypeFields[1],'featured-image-height');
+      markInput($wpuIntegerDataTypeFields[2],'gallery-image-width');
+      markInput($wpuIntegerDataTypeFields[3],'gallery-image-height');
       console.log(requirementsCheckList)
     }
     
@@ -111,7 +120,29 @@ jQuery(document).ready(function($)
     $wpuDeleteCustomFieldBtns.on('click', deleteCustomField);
 
     // btn on submit all form data
-    $wpuSubmitProductRequirements.on('click', markRequirementsCheckList);
+    $wpuSubmitProductRequirements.on('click', function(e){
+      e.stopPropagation();
+      // prepare product requirements checklist form data
+      markRequirementsCheckList(e);
+      console.log(WPU_REMOTE.ADMIN_URL);
+      let formData = {};
+      formData['action'] = 'wpu_add_new_requirements';
+      formData['meta_key'] = "options";
+      formData['meta_value'] =  JSON.stringify(requirementsCheckList);
+      console.log(formData);
+
+      ServerCall(WPU_REMOTE.ADMIN_URL, formData, function(_response) {
+        if (_response.success) {
+          console.log("Success: saved to db");
+          return;
+        } else if (_response.error) {
+          console.log("Failed: did not save to db");
+          return;
+        } else {
+          console.log("try again");
+        }
+      }, 'json');
+    });
     
 });
 

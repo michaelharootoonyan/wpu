@@ -61,10 +61,10 @@ require WOOCOMMERCE_PRODUCT_UPLOADER_PLUGIN_PATH . 'includes/class-woocommerce-p
  *
  * @since    1.0.0
  */
-function runWoocommerceProductUploader() {
-
-	$plugin = new WoocommerceProductUploader();
-	$plugin->run();
+function runWoocommerceProductUploader()
+{
+    $plugin = new WoocommerceProductUploader();
+    $plugin->run();
 }
 
 runWoocommerceProductUploader();
