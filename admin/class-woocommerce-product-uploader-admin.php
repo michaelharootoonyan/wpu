@@ -126,7 +126,34 @@ class WoocommerceProductUploaderAdmin
     {
 
         global $wpdb;
+
+        $pluginMetaTableName = WOOCOMMERCE_PRODUCT_UPLOADER_PREFIX . "pluginmeta";
+
+        $sql = "SELECT meta_value FROM " . $pluginMetaTableName . " WHERE meta_key='options' LIMIT 1";
+        $wpdb->query($sql);
+        $options = json_decode(stripslashes($wpdb->get_results($sql)[0]->meta_value));
+
         include WOOCOMMERCE_PRODUCT_UPLOADER_PLUGIN_PATH.'admin/partials/dashboard.php';
+    }
+
+    public function wpu_get_requirements()
+    {
+        
+        global $wpdb;
+
+		$response  = new \stdclass();
+        $response->success = true;
+
+        $pluginMetaTableName = WOOCOMMERCE_PRODUCT_UPLOADER_PREFIX . "pluginmeta";
+
+        $sql = "SELECT meta_value FROM " . $pluginMetaTableName . " WHERE meta_key='options' LIMIT 1";
+        $wpdb->query($sql);
+
+        $optionsJsonString = stripslashes($wpdb->get_results($sql)[0]->meta_value);
+
+        $response->options = $optionsJsonString;
+        echo json_encode($response);
+        die;
     }
 
     
@@ -139,22 +166,21 @@ class WoocommerceProductUploaderAdmin
 		global $wpdb;
 
 		$response  = new \stdclass();
-		$response->success = false;
+        $response->success = false;
+        
+        $pluginMetaTableName = WOOCOMMERCE_PRODUCT_UPLOADER_PREFIX . "pluginmeta";
 
-		// $form_data = stripslashes_deep($_REQUEST['data']);
-        // $path = ABSPATH . "wp-content\plugins\woocommerce-product-uploader\debug.log";
-        // $myfile = fopen($path, "a") or die("Unable to open file!");  // append mode rather than write mode 'w'
-        // fwrite($myfile, $form_data);
-        // fclose($myfile);
+        $sql = "DELETE FROM " . $pluginMetaTableName ." WHERE meta_key = 'options' LIMIT 1";
+		$wpdb->query($sql);
 		
 		//insert into stores table
         if ($wpdb->insert(
-            WOOCOMMERCE_PRODUCT_UPLOADER_PREFIX . 'pluginmeta',
-            array('meta_key' => $_REQUEST['meta_key'],'meta_value' => $_REQUEST['meta_value']),
+            $pluginMetaTableName,
+            array('meta_key' => $_REQUEST['meta_key'], 'meta_value' => $_REQUEST['meta_value']),
             array('%s','%s')
         )) {
             $response->success = true;
-            $response->msg = __('Product requirements added successfully!','wpu_admin');
+            $response->msg = __('Product requirements added successfully!', 'wpu_admin');
         } else {
             $wpdb->show_errors = true;
 

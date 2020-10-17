@@ -16,6 +16,30 @@ jQuery(document).ready(function($)
           //.is(':checked')
     const $wpuDeleteCustomFieldBtns = $wpuCustomAddedTabsList.find('.wpu-delete-custom-field-btn');
     let n = $wpuDeleteCustomFieldBtns.size();
+    let wpuOptions = null;
+
+    const getRequirementsCheckListFromDB = function(){
+      var option = {};
+      option.dataType = "json";
+      option.type = "GET";
+      ServerCall(WPU_REMOTE.ADMIN_URL + "?action=wpu_get_requirements", null, function(_response) {
+        if (_response.success) {
+          if(_response.options == "") return;
+          let options = JSON.parse(_response.options);
+          // 
+          requirementsCheckList = options;
+          return;
+        } else if (_response.error) {
+          console.log("Failed: did not get data back from the db");
+          return;
+        } else {
+          console.log("try again");
+        }
+      }, option);
+    
+    }
+
+    getRequirementsCheckListFromDB();
 
     const markRequirementsCheckList = function(e){
       e.preventDefault();
@@ -24,35 +48,49 @@ jQuery(document).ready(function($)
       function markInput(inp, key){requirementsCheckList[key] = $(inp).val();}
       markCheckBox($wpuRequiresName, 'name');
       markCheckBox($wpuRequiresDescription, 'description');
-      markCheckBox($wpuRequiresShortDescription, 'short-description');
+      markCheckBox($wpuRequiresShortDescription, 'shortDescription');
       markCheckBox($wpuRequiresPrice, 'price');
       markCheckBox($wpuRequiresSku, 'sku');
-      markCheckBox($wpuRequiresStockStatus, 'stock-status');
+      markCheckBox($wpuRequiresStockStatus, 'stockStatus');
       markCheckBox($wpuRequiresTags, 'tags');
       markCheckBox($wpuRequiresCategories, 'categories');
-      markInput($wpuIntegerDataTypeFields[0],'featured-image-width');
-      markInput($wpuIntegerDataTypeFields[1],'featured-image-height');
-      markInput($wpuIntegerDataTypeFields[2],'gallery-image-width');
-      markInput($wpuIntegerDataTypeFields[3],'gallery-image-height');
-      console.log(requirementsCheckList)
-    }
-    
+      markInput($wpuIntegerDataTypeFields[0],'featuredImageWidth');
+      markInput($wpuIntegerDataTypeFields[1],'featuredImageHeight');
+      markInput($wpuIntegerDataTypeFields[2],'galleryImageWidth');
+      markInput($wpuIntegerDataTypeFields[3],'galleryImageHeight');
 
+      // let $customTabs = $('.wpu-custom-tab-values');
+      // $customTabs.each(function( key, value ) {
+      //   alert( value.innerHTML );
+      //   requirementsCheckList['customTabs'].push(value.innerHTML);
+      // });
+      // console.log(requirementsCheckList);
+    }
 
     const addCustomField = function(event) {
       if (event.keyCode != 13) return;  // soon as they press enter let the code run below
-      
       const $self = $(this);
+      let customAddTabName = $self.val();
+      if (requirementsCheckList['customTabs'] === undefined){
+        requirementsCheckList['customTabs'] = [customAddTabName];
+      } else {
+        requirementsCheckList['customTabs'].push(customAddTabName);
+      }
+      console.log(requirementsCheckList['customTabs'])
       // appending to the custom tabs list
       var li = document.createElement("li");
       li.className = "list-group-item wpu-just-added";
       li.style.backgroundColor='rgba(41, 241, 195, 0.33)';
 
-      var txtNode = document.createTextNode($self.val());
+      var txtNode = document.createTextNode(customAddTabName);
       $self.val('');
 
       let $li = $(li);
-      $li.append(txtNode);
+      var span =  document.createElement("span"); // <span class="wpu-custom-tab-values">
+      // span.className = "wpu-custom-tab-values";
+      let $span = $(span);
+      $(span).append(txtNode);
+      $li.append(span);
 
       var label = document.createElement('label');
       label.className="wpu-delete-custom-field-btn";
@@ -77,11 +115,29 @@ jQuery(document).ready(function($)
       $wpuCustomAddedTabsList.append(li);
       $li.fadeIn(1999).animate({backgroundColor: "#fff"}, 1999);
     }
+
     const deleteCustomField = function(){
       const $a  = $(this);
       const $li = $a.parent();
       $a.unbind('click');
       $li.fadeOut('slow');
+      let $customTabValues = $li.find('.wpu-custom-tab-values');
+      $customTabValues.each(function(key, value){
+        value.innerHTML;
+        let customTabs = requirementsCheckList['customTabs'];
+        var n = customTabs.length;
+        for (var i = 0; i < n; i++)
+        {
+          if (customTabs[i] === value.innerHTML) {
+            // found lets delete it
+            customTabs.splice(i, 1);
+            break;
+          }
+          
+        }
+      });
+      // todo remove from list
+      // requirementsCheckList[]
       n--;
       if (n == 0){
         $wpuCustomAddedTabsList.hide();
@@ -89,6 +145,7 @@ jQuery(document).ready(function($)
         $wpuCustomAddedTabsList.fadeIn(2999);
       }
     }
+
     const integerRegexValidator = function(event){
         // Backspace, tab, enter, end, home, left, right
         // We don't support the del key in Opera because del == . == 46.
@@ -105,7 +162,7 @@ jQuery(document).ready(function($)
         } else {
           event.preventDefault();
         }
-      }
+    }
 
 
 
