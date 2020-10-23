@@ -149,7 +149,7 @@
                     </form>
                 </div>
               </div>
-              <div class="row">                      
+              <div class="row" style="padding:6% 7%;">                      
                 <form id="upload" enctype="multipart/form-data">
                   <div id="drop">
                     Drop Here
