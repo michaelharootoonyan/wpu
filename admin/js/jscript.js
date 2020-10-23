@@ -2,17 +2,17 @@ jQuery(document).ready(function($)
 {
     let requirementsCheckList = {}  // boolean key value list
     const $wpuCustomAddedTabsList = $('#wpu-your-custom-added-tabs'),
-          $wpuAddCustomTabRequirement = $('#wpu-add-custom-tab-requirement'),
+          $wpuAddAttributeRequirement = $('#wpu-add-attribute-requirement'),
           $wpuIntegerDataTypeFields = $(".wpu-integer-data-type"),
           $wpuSubmitProductRequirements = $('#wpu-submit-product-requirements-btn'),
-          $wpuRequiresName = $('#wpu-required-attributes-for-each-product-name'),
-          $wpuRequiresDescription = $('#wpu-required-attributes-for-each-product-description'),
-          $wpuRequiresShortDescription = $('#wpu-required-attributes-for-each-product-short-description'),
-          $wpuRequiresSku = $('#wpu-required-attributes-for-each-product-sku'),
-          $wpuRequiresStockStatus = $('#wpu-required-attributes-for-each-product-stock-status'),
-          $wpuRequiresPrice = $('#wpu-required-attributes-for-each-product-price'),
-          $wpuRequiresCategories = $('#wpu-required-attributes-for-each-product-categories'),
-          $wpuRequiresTags = $('#wpu-required-attributes-for-each-product-tags');
+          $wpuRequiresName = $('#wpu-required-meta-for-each-product-name'),
+          $wpuRequiresDescription = $('#wpu-required-meta-for-each-product-description'),
+          $wpuRequiresShortDescription = $('#wpu-required-meta-for-each-product-short-description'),
+          $wpuRequiresSku = $('#wpu-required-meta-for-each-product-sku'),
+          $wpuRequiresStockStatus = $('#wpu-required-meta-for-each-product-stock-status'),
+          $wpuRequiresPrice = $('#wpu-required-meta-for-each-product-price'),
+          $wpuRequiresCategories = $('#wpu-required-meta-for-each-product-categories'),
+          $wpuRequiresTags = $('#wpu-required-meta-for-each-product-tags');
           //.is(':checked')
     const $wpuDeleteCustomFieldBtns = $wpuCustomAddedTabsList.find('.wpu-delete-custom-field-btn');
     let n = $wpuDeleteCustomFieldBtns.size();
@@ -57,25 +57,18 @@ jQuery(document).ready(function($)
       markInput($wpuIntegerDataTypeFields[1],'featuredImageHeight');
       markInput($wpuIntegerDataTypeFields[2],'galleryImageWidth');
       markInput($wpuIntegerDataTypeFields[3],'galleryImageHeight');
-
-      // let $customTabs = $('.wpu-custom-tab-values');
-      // $customTabs.each(function( key, value ) {
-      //   alert( value.innerHTML );
-      //   requirementsCheckList['customTabs'].push(value.innerHTML);
-      // });
-      // console.log(requirementsCheckList);
     }
 
     const addCustomField = function(event) {
       if (event.keyCode != 13) return;  // soon as they press enter let the code run below
       const $self = $(this);
       let customAddTabName = $self.val();
-      if (requirementsCheckList['customTabs'] === undefined){
-        requirementsCheckList['customTabs'] = [customAddTabName];
+      if (requirementsCheckList['productAttributes'] === undefined){
+        requirementsCheckList['productAttributes'] = [customAddTabName];
       } else {
-        requirementsCheckList['customTabs'].push(customAddTabName);
+        requirementsCheckList['productAttributes'].push(customAddTabName);
       }
-      console.log(requirementsCheckList['customTabs'])
+      console.log(requirementsCheckList['productAttributes'])
       // appending to the custom tabs list
       var li = document.createElement("li");
       li.className = "list-group-item wpu-just-added";
@@ -85,8 +78,7 @@ jQuery(document).ready(function($)
       $self.val('');
 
       let $li = $(li);
-      var span =  document.createElement("span"); // <span class="wpu-custom-tab-values">
-      // span.className = "wpu-custom-tab-values";
+      var span =  document.createElement("span");
       let $span = $(span);
       $span.append(txtNode);
       $li.append(span);
@@ -120,15 +112,15 @@ jQuery(document).ready(function($)
       const $li = $a.parent();
       $a.unbind('click');
       $li.fadeOut('slow');
-      let $customTabValues = $li.find('.wpu-custom-tab-values');
+      let $customTabValues = $li.find('.wpu-attribute-values');
       $customTabValues.each(function(key, value){
-        let customTabs = requirementsCheckList['customTabs'];
-        n = customTabs.length;
+        let productAttributes = requirementsCheckList['productAttributes'];
+        n = productAttributes.length;
         for (var i = 0; i < n; i++)
         {
-          if (customTabs[i] === value.innerHTML) {
+          if (productAttributes[i] === value.innerHTML) {
             // found lets delete it
-            customTabs.splice(i, 1);
+            productAttributes.splice(i, 1);
             break;
           }
           
@@ -214,21 +206,6 @@ jQuery(document).ready(function($)
                 console.log(key[0] + ', ' + key[1]);
             }
 
-
-            // var option = {};
-            // option.dataType = "json";
-            // option.type = "POST";
-            // ServerCall(WPU_REMOTE.ADMIN_URL, JSON.parse(post_data), function(_response) {
-            //   if (_response.success) {
-            //     console.log("successfully uploaded zip")
-            //     return;
-            //   } else if (_response.error) {
-            //     console.log("Failed: did not get data back from the db");
-            //     return;
-            //   } else {
-            //     console.log("try again");
-            //   }
-            // }, option);
             $.ajax({
               url: WPU_REMOTE.ADMIN_URL,
               cache: false,
@@ -306,7 +283,7 @@ jQuery(document).ready(function($)
       $wpuIntegerDataTypeFields.on('keypress', integerRegexValidator);
 
       // custom fields
-      $wpuAddCustomTabRequirement.on('keypress', addCustomField);
+      $wpuAddAttributeRequirement.on('keypress', addCustomField);
       $wpuDeleteCustomFieldBtns.on('click', deleteCustomField);
 
       // btn on submit all form data

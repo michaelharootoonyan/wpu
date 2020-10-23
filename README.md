@@ -3,9 +3,16 @@ WooCommerce Product Uploader is a WordPress Custom Plugin that makes your client
 
 
 # About this branch
-This branch is to be used as a refernece when we add more features to WPU like Custom Tabs.  I have the incorrect lingo that needs to be corrected in the dashboard.  Custom Tabs is from a WooCommerce Add-On plugin called WooCommerce Custom Tabs.
+This branch is to be used to continue the project.  This product is not yet finished, will be adding every weekend here and there some features to dashboard and functionality.
 
-# Todo
-This product is not yet finished, will be adding every weekend here and there some features to dashboard and functionality.
-1. Options are now saveable, will remove custom tabs, or change to attributes?  Custom tabs is from a pluginm could add this later.
-2. File zip uploader has been added now we need to extract the files and go through them using the options from the db.
+# Here is what is left Todo:
+1. Notifications need to be displayed for ux.
+2. Extract the files.
+3. Validate files with rules from the requirement options that are already saved in the db.
+
+
+# Here is what has been done:
+1. savable options in database with jquery so no page load neccessary.
+2. File zip uploader has been added. 
+3. Changed custom tabs to attributes, will add this feature later.
+4. Changed Products Attribute to say Product Meta, and fixed incorrect lingo.
