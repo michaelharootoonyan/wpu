@@ -39,7 +39,6 @@ jQuery(document).ready(function($)
     
     }
 
-    getRequirementsCheckListFromDB();
 
     const markRequirementsCheckList = function(e){
       e.preventDefault();
@@ -164,20 +163,155 @@ jQuery(document).ready(function($)
         }
     }
 
+    const uploadZipFile = function(){
+      var ul = $('#upload ul');
+
+    $('#drop a').click(function(){
+        // Simulate a click on the file input button
+        // to show the file browser dialog
+        $(this).parent().find('input').click();
+    });
+
+    // Initialize the jQuery File Upload plugin
+    $('#upload').fileupload({
+
+        // This element will accept file drag/drop uploading
+        dropZone: $('#drop'),
+
+        // This function is called when a file is added to the queue;
+        // either via the browse button, or via drag/drop:
+        add: function (e, data) {
+
+            var tpl = $('<li class="working"><input type="text" value="0" data-width="48" data-height="48"'+
+                ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /><p></p><span></span></li>');
+
+            // Append the file name and file size
+            tpl.find('p').text(data.files[0].name)
+                         .append('<i>' + formatFileSize(data.files[0].size) + '</i>');
+
+            // Add the HTML to the UL element
+            data.context = tpl.appendTo(ul);
+
+            // Initialize the knob plugin
+            tpl.find('input').knob();
+
+            // Listen for clicks on the cancel icon
+            tpl.find('span').click(function(){
+
+                if(tpl.hasClass('working')){
+                    jqXHR.abort();
+                }
+
+                tpl.fadeOut(function(){
+                    tpl.remove();
+                });
+
+            });
+            var post_data = new FormData();
+            post_data.append('action', 'wpu_upload_zip_file');
+            post_data.append('upl', data.files[0]);
+
+            for (var key of post_data.entries()) {
+                console.log(key[0] + ', ' + key[1]);
+            }
 
 
-    /**
-     * Add Event Listeners
-     */
-    // featured and gallery image dimensions integer validation
-    $wpuIntegerDataTypeFields.on('keypress', integerRegexValidator);
+            // var option = {};
+            // option.dataType = "json";
+            // option.type = "POST";
+            // ServerCall(WPU_REMOTE.ADMIN_URL, JSON.parse(post_data), function(_response) {
+            //   if (_response.success) {
+            //     console.log("successfully uploaded zip")
+            //     return;
+            //   } else if (_response.error) {
+            //     console.log("Failed: did not get data back from the db");
+            //     return;
+            //   } else {
+            //     console.log("try again");
+            //   }
+            // }, option);
+            $.ajax({
+              url: WPU_REMOTE.ADMIN_URL,
+              cache: false,
+              contentType: false,
+              processData: false,
+              data: post_data,
+              type: 'POST',
+              success: function(response) {
+                  console.log(response);
+              },
+              error: function(error) {
+                  console.log(error);
+              }
+          });
+            // end of template server call code
+            // Automatically upload the file once it is added to the queue
+            // var jqXHR = data.submit(); this wont work cause its not a form anymore lets try my server call now
+            
+        },
 
-    // custom fields
-    $wpuAddCustomTabRequirement.on('keypress', addCustomField);
-    $wpuDeleteCustomFieldBtns.on('click', deleteCustomField);
+        progress: function(e, data){
 
-    // btn on submit all form data
-    $wpuSubmitProductRequirements.on('click', function(e){
+            // Calculate the completion percentage of the upload
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+
+            // Update the hidden input field and trigger a change
+            // so that the jQuery knob plugin knows to update the dial
+            data.context.find('input').val(progress).change();
+
+            if(progress == 100){
+                data.context.removeClass('working');
+            }
+        },
+
+        fail:function(e, data){
+            // Something has gone wrong!
+            data.context.addClass('error');
+        }
+
+    });
+
+
+    // Prevent the default action when a file is dropped on the window
+    $(document).on('drop dragover', function (e) {
+        e.preventDefault();
+    });
+
+    // Helper function that formats the file sizes
+    function formatFileSize(bytes) {
+        if (typeof bytes !== 'number') {
+            return '';
+        }
+
+        if (bytes >= 1000000000) {
+            return (bytes / 1000000000).toFixed(2) + ' GB';
+        }
+
+        if (bytes >= 1000000) {
+            return (bytes / 1000000).toFixed(2) + ' MB';
+        }
+
+        return (bytes / 1000).toFixed(2) + ' KB';
+    }
+    
+    }
+
+    const main = function(){
+      getRequirementsCheckListFromDB();
+      uploadZipFile();
+
+      /**
+       * Add Event Listeners
+       */
+      // featured and gallery image dimensions integer validation
+      $wpuIntegerDataTypeFields.on('keypress', integerRegexValidator);
+
+      // custom fields
+      $wpuAddCustomTabRequirement.on('keypress', addCustomField);
+      $wpuDeleteCustomFieldBtns.on('click', deleteCustomField);
+
+      // btn on submit all form data
+      $wpuSubmitProductRequirements.on('click', function(e){
       e.stopPropagation();
       // prepare product requirements checklist form data
       markRequirementsCheckList(e);
@@ -200,6 +334,7 @@ jQuery(document).ready(function($)
         }
       }, 'json');
     });
-    
+    }
+    main();
 });
 

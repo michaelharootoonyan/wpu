@@ -5,4 +5,5 @@ WooCommerce Product Uploader is a WordPress Custom Plugin that makes your client
 
 # Todo
 This product is not yet finished, will be adding every weekend here and there some features to dashboard and functionality.
-1. Create table on activation, 1 row serializable, we do not need anything else.
+1. Options are now saveable, will remove custom tabs, or change to attributes?  Custom tabs is from a pluginm could add this later.
+2. File zip uploader has been added now we need to extract the files and go through them using the options from the db.

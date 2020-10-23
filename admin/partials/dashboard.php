@@ -48,26 +48,8 @@
                           <legend>Your Custom Added tabs</legend>
                           <ul id="wpu-your-custom-added-tabs" class="list-group list-group-flush">
                           <?php
-                              /* dummy data that gets populated here todo bring CONFIGS data form database here to populate list */
-                              $dummyCustomTabs = ["Cras justo odio", "Dapibus ac facilisis in", "Morbi leo risus", "Porta ac consectetur ac", "Vestibulum at eros"];
-                            /**
-                             * object(stdClass)#1757 (12) { 
-                             * ["name"]=> bool(false) 
-                             * ["description"]=> bool(true) 
-                             * ["shortDescription"]=> bool(false) 
-                             * ["price"]=> bool(false) 
-                             * ["sku"]=> bool(false) 
-                             * ["stockStatus"]=> bool(false) 
-                             * ["tags"]=> bool(false) 
-                             * ["categories"]=> bool(true) 
-                             * ["featuredImageWidth"]=> string(3) "900" 
-                             * ["featuredImageHeight"]=> string(3) "900" 
-                             * ["galleryImageWidth"]=> string(3) "900" 
-                             * ["galleryImageHeight"]=> string(3) "900" }
-                             */
-                            // var_dump($options->customTabs);
                             if (!isset($options) || (isset($options) && sizeof($options->customTabs) == 0)) 
-                              echo '<li class="list-group-item wpu-none-added">None added!  Use the input field above to add custom tabs..</li>';
+                              echo '<li class="list-group-item wpu-none-added">None added!  Use the input field above to add custom tabs.</li>';
                             else
                               foreach ($options->customTabs as $value) {
                                   if( is_string($value))
@@ -167,7 +149,20 @@
                     </form>
                 </div>
               </div>
-              <div class="row"></div>
+              <div class="row">                      
+                <form id="upload" enctype="multipart/form-data">
+                  <div id="drop">
+                    Drop Here
+
+                    <a>Browse</a>
+                    <input type="file" name="upl" multiple />
+                  </div>
+
+                  <ul>
+                    <!-- The file uploads will be shown here -->
+                  </ul>
+                </form>
+              </div>
             </div>
             <div class="dump-message wpu-dumper"></div>
           </div>

@@ -100,9 +100,13 @@ class WoocommerceProductUploaderAdmin
          */
         wp_enqueue_script( $this->WoocommerceProductUploader.'-lib', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/libs.js', array('jquery'), $this->version, false );
         wp_enqueue_script('wpu-bootstrap', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/bootstrap.min.js', array('jquery'), $this->version, false );
-        wp_enqueue_script($this->WoocommerceProductUploader.'-upload', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery.fileupload.min.js', array('jquery'), $this->version, false );
         wp_enqueue_script( $this->WoocommerceProductUploader.'-jquery-1.12.4', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery-1.12.4.js', array('jquery'), $this->version, false );
         wp_enqueue_script( $this->WoocommerceProductUploader.'-jquery-ui', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery-ui.js', array('jquery'), $this->version, false );
+        wp_enqueue_script($this->WoocommerceProductUploader.'-jquery-knob', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery.knob.js', array('jquery'), $this->version, false );
+        wp_enqueue_script($this->WoocommerceProductUploader.'-jquery-ui-widget', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery.ui.widget.js', array('jquery'), $this->version, false );
+        wp_enqueue_script($this->WoocommerceProductUploader.'-jquery-iframe-transport', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery.iframe-transport.js', array('jquery'), $this->version, false );
+        wp_enqueue_script($this->WoocommerceProductUploader.'-jquery-fileupload', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery.fileupload.js', array('jquery'), $this->version, false );
+
         wp_enqueue_script( $this->WoocommerceProductUploader.'-jscript', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jscript.js', array('jquery'), $this->version, false );
 
 
@@ -191,4 +195,39 @@ class WoocommerceProductUploaderAdmin
         echo json_encode($response);
         die;
     }
+
+    private function logThis($data, $path)
+    {
+        $myfile = fopen($path . "log.txt", "a") or die("Unable to open file!");  // append mode rather than write mode 'w'
+        fwrite($myfile, print_r($data));
+        fclose($myfile);
+    }
+
+    public function wpu_upload_zip_file()
+    {
+        // A list of permitted file extensions
+        $allowed = array('zip');
+        $path = str_replace('/', '', ABSPATH) . "\wp-content\plugins\woocommerce-product-uploader\admin\uploads\\";
+
+        if (isset($_FILES['upl']) && $_FILES['upl']['error'] == 0) {
+            
+            $extension = pathinfo($_FILES['upl']['name'], PATHINFO_EXTENSION);
+
+            if (!in_array(strtolower($extension), $allowed)) {
+                echo "not in array";
+                echo '{"status":"error"}';
+                die;
+            }
+
+            if (move_uploaded_file($_FILES['upl']['tmp_name'], $path.$_FILES['upl']['name'])) {
+                echo '{"status":"success"}';
+                die;
+            }
+        }
+
+        echo '{"status":"error"}';
+        die;
+    }
+
+
 }

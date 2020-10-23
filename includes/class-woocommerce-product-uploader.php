@@ -127,6 +127,7 @@ class WoocommerceProductUploader
 
         add_action('wp_ajax_wpu_add_new_requirements', array($this->plugin_admin, 'wpu_add_new_requirements'));
         add_action('wp_ajax_wpu_get_requirements', array($this->plugin_admin, 'wpu_get_requirements'));
+        add_action('wp_ajax_wpu_upload_zip_file', array($this->plugin_admin, 'wpu_upload_zip_file'));
     }
     
     /*All Admin Callback hooks*/
