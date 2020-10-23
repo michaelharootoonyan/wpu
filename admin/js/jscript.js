@@ -88,7 +88,7 @@ jQuery(document).ready(function($)
       var span =  document.createElement("span"); // <span class="wpu-custom-tab-values">
       // span.className = "wpu-custom-tab-values";
       let $span = $(span);
-      $(span).append(txtNode);
+      $span.append(txtNode);
       $li.append(span);
 
       var label = document.createElement('label');
@@ -122,9 +122,8 @@ jQuery(document).ready(function($)
       $li.fadeOut('slow');
       let $customTabValues = $li.find('.wpu-custom-tab-values');
       $customTabValues.each(function(key, value){
-        value.innerHTML;
         let customTabs = requirementsCheckList['customTabs'];
-        var n = customTabs.length;
+        n = customTabs.length;
         for (var i = 0; i < n; i++)
         {
           if (customTabs[i] === value.innerHTML) {
