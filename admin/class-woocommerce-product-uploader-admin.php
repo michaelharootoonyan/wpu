@@ -101,8 +101,11 @@ class WoocommerceProductUploaderAdmin
         wp_enqueue_script( $this->WoocommerceProductUploader.'-lib', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/libs.js', array('jquery'), $this->version, false );
         wp_enqueue_script('wpu-bootstrap', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/bootstrap.min.js', array('jquery'), $this->version, false );
         wp_enqueue_script( $this->WoocommerceProductUploader.'-jquery-1.12.4', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery-1.12.4.js', array('jquery'), $this->version, false );
-        wp_enqueue_script( $this->WoocommerceProductUploader.'-jquery-ui', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery-ui.js', array('jquery'), $this->version, false );
         wp_enqueue_script($this->WoocommerceProductUploader.'-jquery-knob', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery.knob.js', array('jquery'), $this->version, false );
+
+
+        // wp_enqueue_script( $this->WoocommerceProductUploader.'-jquery-ui', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery-ui.js', array('jquery'), $this->version, false );
+        // jQuery File Upload Dependencies
         wp_enqueue_script($this->WoocommerceProductUploader.'-jquery-ui-widget', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery.ui.widget.js', array('jquery'), $this->version, false );
         wp_enqueue_script($this->WoocommerceProductUploader.'-jquery-iframe-transport', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery.iframe-transport.js', array('jquery'), $this->version, false );
         wp_enqueue_script($this->WoocommerceProductUploader.'-jquery-fileupload', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery.fileupload.js', array('jquery'), $this->version, false );
@@ -111,7 +114,7 @@ class WoocommerceProductUploaderAdmin
 
 
         $langs = array(
-            'invalid_file_error'  => __('Invalid File, Accepts JPG, PNG, GIF or SVG.','wpu_admin'),
+            'invalid_file_error'  => __('Invalid File, Accepts ZIP.','wpu_admin'),
             'error_try_again'  => __('Error Occured, Please try Again.','wpu_admin'),
         );
 
@@ -210,7 +213,6 @@ class WoocommerceProductUploaderAdmin
         $path = str_replace('/', '', ABSPATH) . "\wp-content\plugins\woocommerce-product-uploader\admin\uploads\\";
 
         if (isset($_FILES['upl']) && $_FILES['upl']['error'] == 0) {
-            
             $extension = pathinfo($_FILES['upl']['name'], PATHINFO_EXTENSION);
 
             if (!in_array(strtolower($extension), $allowed)) {
@@ -219,7 +221,19 @@ class WoocommerceProductUploaderAdmin
                 die;
             }
 
-            if (move_uploaded_file($_FILES['upl']['tmp_name'], $path.$_FILES['upl']['name'])) {
+            $filename = $path . $_FILES['upl']['name'];
+
+            if (move_uploaded_file($_FILES['upl']['tmp_name'], $filename)) {
+                $zip = new ZipArchive;
+                $extracted = $zip->open($filename);
+                if ($extracted) {
+                    // Extract file
+                    $zip->extractTo($path);
+                    $zip->close();
+                    echo 'Unzipped!';
+                } else {
+                    echo 'failed to unzip!';
+                }
                 echo '{"status":"success"}';
                 die;
             }

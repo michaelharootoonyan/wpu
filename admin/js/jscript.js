@@ -155,74 +155,94 @@ jQuery(document).ready(function($)
     }
 
     const uploadZipFile = function(){
-      var ul = $('#upload ul');
+        var $form = $('#upload');
+        var ul = $form.find('ul');
 
-    $('#drop a').click(function(){
-        // Simulate a click on the file input button
-        // to show the file browser dialog
-        $(this).parent().find('input').click();
-    });
+        $('#drop a').click(function(){
+            // Simulate a click on the file input button
+            // to show the file browser dialog
+            $(this).parent().find('input').click();
+        });
 
-    // Initialize the jQuery File Upload plugin
-    $('#upload').fileupload({
+        // Initialize the jQuery File Upload plugin
+        $form.fileupload({
+            // This element will accept file drag/drop uploading
+            dropZone: $('#drop'),
+            // This function is called when a file is added to the queue;
+            // either via the browse button, or via drag/drop:
+            add: function (e, data) {
+                var jqXHR = new XMLHttpRequest();
+                var tpl = $('<li class="working"><input type="text" value="0" data-width="48" data-height="48"'+
+                    ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /><p></p><span></span></li>');
 
-        // This element will accept file drag/drop uploading
-        dropZone: $('#drop'),
+                // Append the file name and file size
+                tpl.find('p').text(data.files[0].name)
+                            .append('<i>' + formatFileSize(data.files[0].size) + '</i>');
 
-        // This function is called when a file is added to the queue;
-        // either via the browse button, or via drag/drop:
-        add: function (e, data) {
+                // Add the HTML to the UL element
+                data.context = tpl.appendTo(ul);
 
-            var tpl = $('<li class="working"><input type="text" value="0" data-width="48" data-height="48"'+
-                ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /><p></p><span></span></li>');
+                // Initialize the knob plugin
+                tpl.find('input').knob();
 
-            // Append the file name and file size
-            tpl.find('p').text(data.files[0].name)
-                         .append('<i>' + formatFileSize(data.files[0].size) + '</i>');
+                // Listen for clicks on the cancel icon
+                tpl.find('span').click(function(){
 
-            // Add the HTML to the UL element
-            data.context = tpl.appendTo(ul);
+                    if(tpl.hasClass('working')){
+                        jqXHR.abort();
+                    }
 
-            // Initialize the knob plugin
-            tpl.find('input').knob();
+                    tpl.fadeOut(function(){
+                        tpl.remove();
+                    });
 
-            // Listen for clicks on the cancel icon
-            tpl.find('span').click(function(){
-
-                if(tpl.hasClass('working')){
-                    jqXHR.abort();
-                }
-
-                tpl.fadeOut(function(){
-                    tpl.remove();
                 });
+                var post_data = new FormData();
+                post_data.append('action', 'wpu_upload_zip_file');
+                post_data.append('upl', data.files[0]);
 
-            });
-            var post_data = new FormData();
-            post_data.append('action', 'wpu_upload_zip_file');
-            post_data.append('upl', data.files[0]);
+                // for (var key of post_data.entries()) {
+                //     console.log(key[0] + ', ' + key[1]);
+                // }
+                // data.submit() same call below...
+   
 
-            for (var key of post_data.entries()) {
-                console.log(key[0] + ', ' + key[1]);
-            }
-
-            $.ajax({
-              url: WPU_REMOTE.ADMIN_URL,
-              cache: false,
-              contentType: false,
-              processData: false,
-              data: post_data,
-              type: 'POST',
-              success: function(response) {
-                  console.log(response);
-              },
-              error: function(error) {
-                  console.log(error);
-              }
-          });
-            // end of template server call code
-            // Automatically upload the file once it is added to the queue
-            // var jqXHR = data.submit(); this wont work cause its not a form anymore lets try my server call now
+                jqXHR = $.ajax({
+                //   xhr: function() {
+                //     var xhr = new window.XMLHttpRequest();
+                //     xhr.upload.addEventListener("progress", function(evt) {
+                //         if (evt.lengthComputable) {
+                //             var percentComplete = evt.loaded / evt.total;
+                //             //Do something with upload progress here
+                //         }
+                //    }, false);
+            
+                //    xhr.addEventListener("progress", function(evt) {
+                //        if (evt.lengthComputable) {
+                //            var percentComplete = evt.loaded / evt.total;
+                //            //Do something with download progress
+                //        }
+                //    }, false);
+            
+                //    return xhr;
+                // },
+                  url: WPU_REMOTE.ADMIN_URL,
+                  cache: false,
+                  contentType: false,
+                  processData: false,
+                  data: post_data,
+                  type: 'POST',
+                  success: function(response) {
+                      console.log(response);
+                  },
+                  error: function(error) {
+                      console.log(error);
+                  }
+              });
+                // end of template server call code
+                // Automatically upload the file once it is added to the queue
+                // var jqXHR = 
+                data.submit(); // doing this to pass that data to progress function.
             
         },
 
