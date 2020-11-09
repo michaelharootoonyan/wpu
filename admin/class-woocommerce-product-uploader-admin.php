@@ -103,8 +103,8 @@ class WoocommerceProductUploaderAdmin
         wp_enqueue_script( $this->WoocommerceProductUploader.'-jquery-1.12.4', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery-1.12.4.js', array('jquery'), $this->version, false );
         wp_enqueue_script($this->WoocommerceProductUploader.'-jquery-knob', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery.knob.js', array('jquery'), $this->version, false );
 
-
-        // wp_enqueue_script( $this->WoocommerceProductUploader.'-jquery-ui', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery-ui.js', array('jquery'), $this->version, false );
+        // This is for things like animate() function etc...
+        wp_enqueue_script( $this->WoocommerceProductUploader.'-jquery-ui', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery-ui.js', array('jquery'), $this->version, false );
         // jQuery File Upload Dependencies
         wp_enqueue_script($this->WoocommerceProductUploader.'-jquery-ui-widget', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery.ui.widget.js', array('jquery'), $this->version, false );
         wp_enqueue_script($this->WoocommerceProductUploader.'-jquery-iframe-transport', WOOCOMMERCE_PRODUCT_UPLOADER_URL_PATH . 'admin/js/jquery.iframe-transport.js', array('jquery'), $this->version, false );
@@ -242,6 +242,4 @@ class WoocommerceProductUploaderAdmin
         echo '{"status":"error"}';
         die;
     }
-
-
 }

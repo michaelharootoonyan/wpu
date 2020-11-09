@@ -12,7 +12,8 @@ jQuery(document).ready(function($)
           $wpuRequiresStockStatus = $('#wpu-required-meta-for-each-product-stock-status'),
           $wpuRequiresPrice = $('#wpu-required-meta-for-each-product-price'),
           $wpuRequiresCategories = $('#wpu-required-meta-for-each-product-categories'),
-          $wpuRequiresTags = $('#wpu-required-meta-for-each-product-tags');
+          $wpuRequiresTags = $('#wpu-required-meta-for-each-product-tags'),
+          $messageDumper = $('.dump-message.wpu-dumper');
           //.is(':checked')
     const $wpuDeleteCustomFieldBtns = $wpuCustomAddedTabsList.find('.wpu-delete-custom-field-btn');
     let n = $wpuDeleteCustomFieldBtns.size();
@@ -39,6 +40,13 @@ jQuery(document).ready(function($)
     
     }
 
+    const messageDumperLog = function(m) {
+      $messageDumper.attr('style', 'display:none;');
+      $messageDumper.html(document.createTextNode(m));
+      $messageDumper.fadeIn('slow');
+      $messageDumper.delay(2000);
+      $messageDumper.fadeOut('slow');
+    }
 
     const markRequirementsCheckList = function(e){
       e.preventDefault();
@@ -79,7 +87,9 @@ jQuery(document).ready(function($)
 
       let $li = $(li);
       var span =  document.createElement("span");
+      span.className = "wpu-attribute-values";
       let $span = $(span);
+      
       $span.append(txtNode);
       $li.append(span);
 
@@ -104,7 +114,8 @@ jQuery(document).ready(function($)
       n++;
       $li.hide();
       $wpuCustomAddedTabsList.append(li);
-      $li.fadeIn(1999).animate({backgroundColor: "#fff"}, 1999);
+      $li.fadeIn(1999);
+      $li.animate({backgroundColor: "#fff"}, 1999);
     }
 
     const deleteCustomField = function(){
@@ -320,7 +331,9 @@ jQuery(document).ready(function($)
 
       ServerCall(WPU_REMOTE.ADMIN_URL, formData, function(_response) {
         if (_response.success) {
-          console.log("Success: saved to db");
+          // console.log("Success: saved to db");
+          messageDumperLog("Saved options!")
+          
           return;
         } else if (_response.error) {
           console.log("Failed: did not save to db");

@@ -6,8 +6,7 @@ WooCommerce Product Uploader is a WordPress Custom Plugin that makes your client
 This branch is to be used to continue the project.  This product is not yet finished, will be adding every weekend here and there some features to dashboard and functionality.
 
 # Here is what is left Todo:
-1. Notifications need to be displayed for ux.
-2. Validate files with rules from the requirement options that are already saved in the db.
+1. Validate files with rules from the requirement options that are already saved in the db.
 
 
 # Here is what has been done:
@@ -16,3 +15,4 @@ This branch is to be used to continue the project.  This product is not yet fini
 3. Changed custom tabs to attributes, will add this feature later.
 4. Changed Products Attribute to say Product Meta, and fixed incorrect lingo.
 5. Extract the files make sure you have correct server configurations, obviously need to adjust post max size and max file upload sizes if anything is larger than the current settings.
+6. Notifications are displayed for ux in message dumper bottom left corner of dashboard.
